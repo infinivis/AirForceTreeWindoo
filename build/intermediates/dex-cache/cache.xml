@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="H:\github\windoo-ch-android-library\app\build\intermediates\exploded-aar\windoo-ch-android-library\windoo-ch-android-api\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="07e39a719ba84110675ba157e56c132faadbc7fd">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\classes-32c9cf8557376d418483adf24416b058295587c7.jar" />
+    </item>
+    <item
+        jar="C:\Users\ro\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-216e5f0ce8d12020a9d0612199744f40f3a18daa.jar" />
+    </item>
+    <item
+        jar="H:\github\windoo-ch-android-library\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\classes-fa337277b5f0f4d9817d1b118be876c04e54a58c.jar" />
+    </item>
+    <item
+        jar="H:\github\windoo-ch-android-library\app\build\intermediates\exploded-aar\windoo-ch-android-library\windoo-ch-android-api\unspecified\libs\httpmime-4.3.6.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="66a39a5e37d5da40fdad6176fc24ef4316e74702">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\httpmime-4.3.6-970b1474b685afadc057b713fd751b888ef55a39.jar" />
+    </item>
+    <item
+        jar="H:\github\windoo-ch-android-library\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\classes-e371e99ac14972844c350875da9e39707b4ec59a.jar" />
+    </item>
+    <item
+        jar="H:\github\windoo-ch-android-library\app\build\intermediates\exploded-aar\windoo-ch-android-library\windoo-ch-android-api\unspecified\libs\httpcore-4.3.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="f91b7a4aadc5cf486df6e4634748d7dd7a73f06d">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\httpcore-4.3.3-e9391ea7c35ee8f1393c9b72690f18d5b4064041.jar" />
+    </item>
+    <item
+        jar="H:\github\windoo-ch-android-library\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="H:\github\windoo-ch-android-library\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-959cf10ef4178c57780428ac0c8f93feb00cccae.jar" />
+    </item>
+
+</items>
