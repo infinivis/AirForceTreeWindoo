@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Last status"
+            android:text="@string/lastStatus"
             style="@android:style/TextAppearance.DeviceDefault.Large" />
 
         <TextView
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wind (km/h)"
+            android:text="@string/windSpeed"
             style="@style/Base.TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -59,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Temperature (°c)"
+            android:text="@string/temperature"
             style="@android:style/TextAppearance.DeviceDefault.Large" />
 
         <TextView
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity (%)"
+            android:text="@string/humidity"
             style="@android:style/TextAppearance.DeviceDefault.Large" />
 
         <TextView
@@ -85,7 +85,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pressure (hPa)"
+            android:text="@string/pressure"
             style="@android:style/TextAppearance.DeviceDefault.Large" />
 
         <TextView
@@ -108,21 +108,12 @@
         android:text="Show live measurement"
         android:id="@+id/showLiveMeasurement"
         android:layout_gravity="center_horizontal" />
-
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Publish"
-        android:id="@+id/publishMeasurement"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Publish with picture"
-        android:id="@+id/publishMeasurementWithPicture"
+        android:text="Test"
+        android:id="@+id/btn_test"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

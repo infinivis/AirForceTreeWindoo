@@ -15,13 +15,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Observable;
@@ -32,7 +39,12 @@ import ch.skywatch.windoo.api.JDCWindooManager;
 import ch.skywatch.windoo.api.JDCWindooMeasurement;
 import ch.sykwatch.windooapidemo.net.SendToWindooTask;
 
+
+
+
+
 public class WindooApiDemo extends Activity implements Observer {
+
 
     static final String TAG = "WindooApiDemo";
 
@@ -47,9 +59,9 @@ public class WindooApiDemo extends Activity implements Observer {
     private TextView temperature;
     private TextView humidity;
     private TextView pressure;
-    private Button publishMeasurement;
-    private Button publishMeasurementWithPicture;
+
     private Button liveMeasurement;
+    private Button btn_test;
 
     private ProgressDialog calibratingDialog;
     private AlertDialog volumeDialog;
@@ -57,44 +69,78 @@ public class WindooApiDemo extends Activity implements Observer {
 
     private JDCWindooMeasurement currentMeasure;
 
+    private  WebSocketClient mWebSocketClient;
+//variables ajoutées par Romain
+
+// function websocket
+
+private void connectWebSocket() {
+    URI uri;
+
+    try {
+       // uri = new URI("ws://10.192.114.203:8100");
+       // uri = new URI("ws://192.168.0.10:8100");
+        uri = new URI("ws://192.168.0.10:8080");
+
+    } catch (URISyntaxException e) {
+        e.printStackTrace();
+        return;
+    }
+
+    mWebSocketClient = new WebSocketClient(uri) {
+        @Override
+        public void onOpen(ServerHandshake serverHandshake) {
+            Log.i("Websocket", "Opened");
+            //mWebSocketClient.send("Hello from heig-vd");
+        }
+
+        @Override
+        public void onMessage(String s) {
+        }
+
+        @Override
+        public void onClose(int i, String s, boolean b) {
+            Log.i("Websocket", "Closed " + s);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            Log.i("Websocket", "Error " + e.getMessage());
+        }
+    };
+    mWebSocketClient.connect();
+}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
+        connectWebSocket();
+
+
         setContentView(R.layout.activity_windoo_api_demo);
 
         jdcWindooManager = JDCWindooManager.getInstance();
-        jdcWindooManager.setToken(getString(R.string.api_token));
+        jdcWindooManager.setToken("bbe5808d‐18bf‐4290‐af7e‐26a31d86bde9");
+
+
 
         currentMeasure = new JDCWindooMeasurement();
+
+
 
         log = (TextView) findViewById(R.id.log);
         wind = (TextView) findViewById(R.id.wind);
         temperature = (TextView) findViewById(R.id.temperature);
         humidity = (TextView) findViewById(R.id.humidity);
         pressure = (TextView) findViewById(R.id.pressure);
-        publishMeasurement = (Button) findViewById(R.id.publishMeasurement);
-        publishMeasurement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "Publish current measurement");
-                if (isOnline()) {
-                    // Post measure to Windoo server
-                    fullfillFakeMeasure();
-                    new SendToWindooTask(WindooApiDemo.this).execute(currentMeasure);
-                }
-            }
-        });
 
-        publishMeasurementWithPicture = (Button) findViewById(R.id.publishMeasurementWithPicture);
-        publishMeasurementWithPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "Publish current measurement with picture");
-                if (isOnline()) {
-                    chooseAPicture();
-                }
-            }
-        });
+
+
+
 
         liveMeasurement = (Button) findViewById(R.id.showLiveMeasurement);
         liveMeasurement.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +153,34 @@ public class WindooApiDemo extends Activity implements Observer {
             }
         });
 
+        btn_test = (Button) findViewById(R.id.btn_test);
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Test");
+
+                JDCWindooMeasurement measurement = jdcWindooManager.getLive();
+                //websocket//////////////////////
+              // mWebSocketClient.send(measurement.toString());
+                ///////////////////////////////////
+
+
+                Log.i(TAG, measurement.toString());
+            }
+        });
+
         formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(2);
         formatter.setMaximumFractionDigits(2);
+
+
     }
+
+    final class JavaScriptInterface {
+        JavaScriptInterface () { }
+        public String getSomeString() {
+            return "string";
+        }};
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,6 +212,7 @@ public class WindooApiDemo extends Activity implements Observer {
 
     @Override
     public void update(Observable observable, final Object object) {
+
         runOnUiThread(new Runnable() {
             public void run() {
 
@@ -195,11 +266,40 @@ public class WindooApiDemo extends Activity implements Observer {
                     Toast.makeText(WindooApiDemo.this, "JDCWindooPublishException: " + e.getData(), Toast.LENGTH_LONG).show();
 
                 // New Data
+
+
+
+                    /////////////        New WIND VALUE         /////////////
+                    /////////////////////////////////////////////////////////
+                    /////////////////////////////////////////////////////////
+
+
                 } else if (e.getType() == JDCWindooEvent.JDCWindooNewWindValue) {
                     Log.d(TAG, "Wind received : " + e.getData());
                     log.setText("JDCWindooNewWindValue");
                     wind.setText(formatter.format(e.getData()));
                     currentMeasure.setWind((Double)e.getData());
+
+
+
+                    ////// my part
+                    JSONObject jsonObj = new JSONObject();
+                    try {
+                        jsonObj.put("id","android");
+                        jsonObj.put("type","text");
+                        jsonObj.put("windSpeed",formatter.format(e.getData()));
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+
+                   String jsonString = jsonObj.toString();
+
+                    Log.i(TAG, "sended wind  toooooooooooooooooo server : " + jsonString);
+
+                    mWebSocketClient.send(jsonString);
+
+
+
                 } else if (e.getType() == JDCWindooEvent.JDCWindooNewTemperatureValue) {
                     Log.d(TAG, "Temperature received : " + e.getData());
                     log.setText("JDCWindooNewTemperatureValue");
